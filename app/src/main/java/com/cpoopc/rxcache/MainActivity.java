@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cpoopc.retrofitrxcache.RxCacheResult;
+import com.cpoopc.rxcache.api.APIManager;
 import com.cpoopc.rxcache.model.User;
 
 import butterknife.Bind;
@@ -65,8 +66,7 @@ public class MainActivity extends Activity {
     public void getUserDetail() {
 
         // 1
-        Observable<RxCacheResult<User>> userObservable = MyApplication.getInstance().
-                getGithubService().userDetail("cpoopc");
+        Observable<RxCacheResult<User>> userObservable = APIManager.buildAPI("haha",1).userDetail("cpoopc");
 
         // 2
         userObservable

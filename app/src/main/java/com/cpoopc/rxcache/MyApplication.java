@@ -1,8 +1,9 @@
 package com.cpoopc.rxcache;
 
 import android.app.Application;
+import android.content.Context;
 
-import com.cpoopc.rxcache.api.GithubService;
+import com.cpoopc.rxcache.api.REST;
 
 import com.cpoopc.retrofitrxcache.BasicCache;
 import retrofit2.Retrofit;
@@ -18,33 +19,42 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MyApplication extends Application {
 
     private static MyApplication instance;
+    private static Context mContext;
     private Retrofit mRetrofit;
-    private GithubService mGithubService;
+    private REST mREST;
 
     public static MyApplication getInstance() {
         return instance;
     }
 
+    public static Context getContext() {
+
+        return mContext;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
-        mRetrofit = new Retrofit.Builder()
-                .baseUrl("https://api.github.com")
 
-                // 分开读取缓存,网络
-                .addCallAdapterFactory(RxCacheCallAdapterFactory.create(BasicCache.fromContext(this), false))
+        mContext = getApplicationContext();
 
-                // 先读取缓存,再获取网络
-//                .addCallAdapterFactory(RxCacheCallAdapterFactory.create(BasicCache.fromContext(this), true))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+//        instance = this;
+//        mRetrofit = new Retrofit.Builder()
+//                .baseUrl("https://api.github.com")
+//
+//                // 分开读取缓存,网络
+//                .addCallAdapterFactory(RxCacheCallAdapterFactory.create(BasicCache.fromContext(this), false))
+//
+//                // 先读取缓存,再获取网络
+////                .addCallAdapterFactory(RxCacheCallAdapterFactory.create(BasicCache.fromContext(this), true))
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
     }
 
-    public GithubService getGithubService() {
-        if (mGithubService == null) {
-            mGithubService = mRetrofit.create(GithubService.class);
+    public REST ApiManager() {
+        if (mREST == null) {
+            mREST = mRetrofit.create(REST.class);
         }
-        return mGithubService;
+        return mREST;
     }
 }

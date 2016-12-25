@@ -46,7 +46,7 @@ public class BasicCache implements IRxCache {
      * @param context    上下文
      * @return  BasicCache
      */
-    public static BasicCache fromContext(Context context) {
+    public static BasicCache fromContext(Context context,String fileName) {
         return new BasicCache(
                 new File(context.getCacheDir(), "retrofit_rxcache"),// 内部缓存建立 名称为 retrofit_rxcache 的文件夹
                 REASONABLE_DISK_SIZE,

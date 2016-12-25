@@ -14,7 +14,7 @@ import rx.Observable;
  * Time: 13:47
  * Ver.: 0.1
  */
-public interface GithubService {
+public interface REST {
 
     @GET("users/{username}")
     Observable<RxCacheResult<User>> userDetail(@Path("username") String userName);
